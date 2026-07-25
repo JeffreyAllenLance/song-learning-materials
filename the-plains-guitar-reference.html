@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Plains — Guitar Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f6f7fb; --panel:#ffffff; --ink:#20232e; --muted:#767c8f;
+    --faint:#a7adbd; --line:#dde0ea; --accent:#6f6fb3; --accent-deep:#4a4a86; --warm:#c8788f;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif; line-height:1.5;
+    -webkit-font-smoothing:antialiased; padding:32px 20px 56px;
+  }
+  .sheet{max-width:760px; margin:0 auto; animation:rise .5s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.sheet{animation:none}}
+
+  /* Masthead */
+  h1{
+    font-family:'Bricolage Grotesque',sans-serif; font-weight:700;
+    font-size:clamp(32px,7vw,52px); letter-spacing:-.02em; line-height:1; margin:.28em 0 0;
+  }
+  h1 .sub{display:block; font-weight:600; color:var(--accent); font-size:.42em; letter-spacing:-.01em; margin-top:.35em}
+  .meta{display:flex; flex-wrap:wrap; gap:8px 10px; margin-top:18px}
+  .chip{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; background:var(--panel);
+    border:1px solid var(--line); border-radius:999px; padding:5px 12px; color:var(--ink);
+  }
+  .chip b{color:var(--accent-deep); font-weight:600}
+  .scope{
+    margin-top:16px; font-size:13px; color:var(--muted);
+    font-family:'IBM Plex Mono',monospace; letter-spacing:.01em;
+  }
+  .scope b{color:var(--accent-deep); font-weight:600}
+  .scope .todo{color:var(--faint)}
+
+  /* Section band */
+  .section-head{display:flex; align-items:center; gap:14px; margin:46px 0 8px}
+  .section-head .tag{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase; color:var(--warm);
+    border:1px solid var(--warm); border-radius:6px; padding:3px 8px; white-space:nowrap;
+    opacity:.9;
+  }
+  .section-head h2{
+    font-family:'Bricolage Grotesque',sans-serif; font-weight:700;
+    font-size:clamp(22px,4.5vw,30px); letter-spacing:-.015em; margin:0;
+  }
+  .section-head .rule{flex:1; height:1px; background:var(--line)}
+
+  .sub-head{display:flex; align-items:baseline; gap:12px; margin:24px 0 10px}
+  .sub-head .n{font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; color:var(--accent); letter-spacing:.08em}
+  .sub-head h3{font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:17px; margin:0; letter-spacing:-.01em}
+
+  .note{color:var(--muted); font-size:14.5px; margin:0 0 16px}
+  .note b{color:var(--ink); font-weight:600}
+
+  /* Arrangement flow */
+  .flow{display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin:4px 0 8px}
+  .flow .step{font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:600; background:var(--panel); border:1px solid var(--line); border-radius:7px; padding:5px 10px; color:var(--accent-deep)}
+  .flow .step.soft{color:var(--muted); font-weight:500; border-style:dashed}
+  .flow .a{color:var(--faint); font-size:12px}
+
+  /* Effects / tone */
+  .fx{display:flex; flex-direction:column; gap:11px; margin:6px 0 8px}
+  .fx .row{display:grid; grid-template-columns:200px 1fr; gap:14px; align-items:start}
+  @media (max-width:520px){.fx .row{grid-template-columns:1fr; gap:4px}}
+  .fx .k{font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-deep); border:1px solid var(--line); border-radius:6px; padding:5px 9px; background:var(--panel); text-align:center}
+  .fx .v{font-size:14px; color:var(--muted); padding-top:2px}
+  .fx .v b{color:var(--ink); font-weight:600}
+
+  /* Progression */
+  .prog{display:flex; flex-wrap:wrap; align-items:center; gap:9px; margin:0 0 20px}
+  .prog .c{font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:21px; color:var(--accent-deep)}
+  .prog .arr{color:var(--faint); font-size:14px}
+  .prog .lead{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--warm); margin-right:4px}
+  .prog .bars{margin-left:2px; color:var(--muted); font-size:12.5px; font-family:'IBM Plex Mono',monospace}
+
+  /* Tab */
+  .tabwrap{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px 4px 16px; overflow-x:auto; width:fit-content; max-width:100%}
+  .tabwrap + .tabwrap{margin-top:12px}
+  pre.tab{margin:0; padding:0 16px; font-family:'IBM Plex Mono',monospace; font-size:14.5px; line-height:1.72; color:var(--ink); white-space:pre}
+  pre.tab .lbl{color:var(--accent); font-weight:600}
+  .syslabel{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); margin:0 0 6px 18px}
+  .legend{display:flex; flex-wrap:wrap; gap:6px 18px; margin:14px 2px 0; font-size:12.5px; color:var(--muted)}
+  .legend b{font-family:'IBM Plex Mono',monospace; color:var(--ink); font-weight:600}
+  .legend .sl{color:var(--warm)}
+
+  /* Voicing cards */
+  .cards{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:16px}
+  @media (max-width:520px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:14px 16px 16px}
+  .card h4{font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:20px; margin:0; color:var(--accent-deep); display:flex; align-items:baseline; gap:8px}
+  .card h4 small{font-family:'Inter',sans-serif; font-weight:500; font-size:11.5px; color:var(--muted)}
+  .strings{margin-top:12px; display:flex; flex-direction:column}
+  .str{display:grid; grid-template-columns:34px 1fr auto; align-items:center; gap:10px; padding:5px 0; border-top:1px dashed var(--line)}
+  .str:first-child{border-top:0}
+  .str .name{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--faint)}
+  .str .rail{height:1px; background:var(--line)}
+  .str .fr{font-family:'IBM Plex Mono',monospace; font-size:13.5px; color:var(--muted); font-weight:500}
+  .str.open .fr{color:var(--faint)}
+  .str.mute .fr{color:var(--faint)}
+  .str.mute .rail{background:repeating-linear-gradient(90deg,var(--line),var(--line) 3px,transparent 3px,transparent 6px)}
+  .str.root .name{color:var(--accent-deep)}
+  .str.root .fr{color:var(--ink); font-weight:600}
+  .str.root .rail{background:var(--accent); opacity:.35}
+  .str.move .fr{color:var(--warm); font-weight:600}
+  .str.move .rail{background:var(--warm); opacity:.3}
+
+  footer{margin-top:36px; color:var(--faint); font-size:12px; font-family:'IBM Plex Mono',monospace}
+
+  @media print{
+    body{background:#fff; padding:0}
+    .tabwrap,.card,.chip,.flow .step{border-color:#ccc}
+    .sheet{animation:none}
+    .section-head{margin-top:30px}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <h1>The Plains<span class="sub">guitar reference</span></h1>
+
+  <div class="meta">
+    <span class="chip">Tuning <b>D A D E A D</b> (low→high)</span>
+    <span class="chip">Capo <b>4</b></span>
+    <span class="chip">Key <b>F#</b></span>
+    <span class="chip"><b>75</b> BPM</span>
+    <span class="chip">Frets <b>relative to capo</b> (0 = capo)</span>
+  </div>
+  <div class="scope">Reference tracks: Champ by Gleemer, Acheron by DIIV</div>
+
+  <!-- ===================== ARRANGEMENT ===================== -->
+  <div class="section-head">
+    <h2>Arrangement</h2>
+    <span class="rule"></span>
+  </div>
+  <p class="note">Full song order. The <b>interlude</b> is the intro pattern again; the <b>outro</b> just rides the final B of the last chorus and then we ring out.</p>
+  <div class="flow">
+    <span class="step">Intro</span><span class="a">→</span>
+    <span class="step">V1</span><span class="a">→</span>
+    <span class="step">PC1</span><span class="a">→</span>
+    <span class="step">C1</span><span class="a">→</span>
+    <span class="step soft">Interlude</span><span class="a">→</span>
+    <span class="step">V2</span><span class="a">→</span>
+    <span class="step">PC2</span><span class="a">→</span>
+    <span class="step">C2</span><span class="a">→</span>
+    <span class="step">Bridge</span><span class="a">→</span>
+    <span class="step">C3</span><span class="a">→</span>
+    <span class="step soft">Outro (B)</span>
+  </div>
+
+  <!-- ===================== EFFECTS ===================== -->
+  <div class="section-head">
+    <h2>Effects</h2>
+    <span class="rule"></span>
+  </div>
+  <div class="fx">
+    <div class="row"><span class="k">Verse / Intro / Interlude</span><span class="v">Clean, healthy dose of <b>CE-2W-style chorus</b>. A flanger dialed back into a subtle chorus (Cure-style) would work fine too.</span></div>
+    <div class="row"><span class="k">Intro / interlude lead</span><span class="v"><b>Multi-head tape delay</b> in a kind of cascading <b>dotted-8th</b> pattern. Can try out some shades of reverb as well.</span></div>
+    <div class="row"><span class="k">Chorus rhythm</span><span class="v">Heavy <b>fuzz / distortion </b>for a big pummeling wall.</span></div>
+    <div class="row"><span class="k">Bridge &amp; last-chorus leads</span><span class="v">Same <b>delay + modulation</b> as the intro lead, bit of <b>overdrive</b> on top for grit.</span></div>
+  </div>
+
+  <!-- ===================== INTRO / VERSE ===================== -->
+  <div class="section-head">
+    <h2>Intro / Verse</h2>
+    <span class="rule"></span>
+  </div>
+
+  <div class="sub-head"><span class="n">▸</span><h3>Progression</h3></div>
+  <p class="note">One chord per bar. The <b>low D string (6)</b> holds the root; the <b>A string (5)</b> walks during each chord. You mainly just focus on the low strings, but you don't have to mute the open ones, in fact I lean into them a touch during the interlude/second verse.</p>
+
+  <div class="prog">
+    <span class="c">F#</span><span class="arr">—</span>
+    <span class="c">D#m</span><span class="arr">—</span>
+    <span class="c">C#</span><span class="arr">—</span>
+    <span class="c">B</span>
+    <span class="bars">· 1 bar each</span>
+  </div>
+
+  <div class="tabwrap">
+<pre class="tab"><span class="lbl">     F#        D#m       C#        B</span>
+1 D|--0---0-|--0---0-|--0---0-|--0---0-|
+2 A|--0---0-|--0---0-|--0---0-|--0---0-|
+3 E|--0---0-|--0---0-|--0---0-|--0---0-|
+4 D|--0---0-|--0---0-|--0---0-|--0---0-|
+5 A|--5-/-7-|--7---9-|--9---7-|--7---5-|
+6 D|--0---0-|--9---9-|--7---7-|--5---5-|</pre>
+  </div>
+
+  <div class="sub-head"><span class="n">▸</span><h3>Chord voicings</h3></div>
+  <p class="note"><b style="color:var(--accent-deep)">Purple</b> = root, <b style="color:var(--warm)">rose</b> = moving voice.</p>
+
+  <div class="cards">
+    <div class="card"><h4>F# <small>I</small></h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">2 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">3 E</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">4 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str move"><span class="name">5 A</span><span class="rail"></span><span class="fr">5 → 7</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">0</span></div>
+    </div></div>
+    <div class="card"><h4>D#m <small>vi</small></h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">2 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">3 E</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">4 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str move"><span class="name">5 A</span><span class="rail"></span><span class="fr">7 → 9</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">9</span></div>
+    </div></div>
+    <div class="card"><h4>C# <small>V</small></h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">2 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">3 E</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">4 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str move"><span class="name">5 A</span><span class="rail"></span><span class="fr">9 → 7</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">7</span></div>
+    </div></div>
+    <div class="card"><h4>B <small>IV</small></h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">2 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">3 E</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">4 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str move"><span class="name">5 A</span><span class="rail"></span><span class="fr">7 → 5</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">5</span></div>
+    </div></div>
+  </div>
+
+  <!-- ===================== PRE-CHORUS ===================== -->
+  <div class="section-head">
+    <h2>Pre-Chorus</h2>
+    <span class="rule"></span>
+  </div>
+
+  <div class="sub-head"><span class="n">▸</span><h3>Progression</h3></div>
+  <p class="note">Four-chord move played through <b>twice</b>. On the first two chords of each pass, the <b>2nd string (A)</b> dips down and comes back before the chord changes. First time out it lands on <b>F#</b> (home); second time it ends on <b>B</b> instead, leaving it open.</p>
+
+  <div class="prog">
+    <span class="lead">1st</span>
+    <span class="c">B</span><span class="arr">—</span><span class="c">C#</span><span class="arr">—</span><span class="c">D#m</span><span class="arr">—</span><span class="c">F#</span>
+  </div>
+  <div class="prog">
+    <span class="lead">2nd</span>
+    <span class="c">B</span><span class="arr">—</span><span class="c">C#</span><span class="arr">—</span><span class="c">D#m</span><span class="arr">—</span><span class="c">B</span>
+  </div>
+
+  <p class="syslabel">1st time</p>
+  <div class="tabwrap">
+<pre class="tab"><span class="lbl">      B         C#         D#m        F#</span>
+1 D|--0-------|--0-------|--0-------|--0-------|
+2 A|--5--4--5-|--7--5--7-|--9-------|--0-------|
+3 E|--0-------|--0-------|--9-------|--0-------|
+4 D|--5-------|--7-------|--0-------|--0-------|
+5 A|--x-------|--x-------|--x-------|--7-------|
+6 D|--5-------|--7-------|--9-------|--0-------|</pre>
+  </div>
+
+  <p class="syslabel">2nd time</p>
+  <div class="tabwrap">
+<pre class="tab"><span class="lbl">      B         C#         D#m        B</span>
+1 D|--0-------|--0-------|--0-------|--0-------|
+2 A|--5--4--5-|--7--5--7-|--9-------|--0-------|
+3 E|--0-------|--0-------|--9-------|--5-------|
+4 D|--5-------|--7-------|--0-------|--5-------|
+5 A|--x-------|--x-------|--x-------|--x-------|
+6 D|--5-------|--7-------|--9-------|--5-------|</pre>
+  </div>
+
+  <div class="sub-head"><span class="n">▸</span><h3>Low-string figure</h3></div>
+  <p class="note">Under the big open chords, the <b>6th &amp; 5th strings</b> run a strum figure like the intro’s: the <b>6th string</b> holds each root while the <b>5th string</b> dips.</p>
+  <p class="syslabel">1st time</p>
+  <div class="tabwrap">
+<pre class="tab"><span class="lbl">    B           C#          D#m F#</span>
+1 D|--------------------------------
+2 A|--------------------------------
+3 E|--------------------------------
+4 D|--------------------------------
+5 A|5---4---5---7---5---7---9---7---
+6 D|5---5---5---7---7---7---9---0---</pre>
+  </div>
+  <p class="syslabel">2nd time</p>
+  <div class="tabwrap">
+<pre class="tab"><span class="lbl">    B           C#          D#m B</span>
+1 D|--------------------------------
+2 A|--------------------------------
+3 E|--------------------------------
+4 D|--------------------------------
+5 A|5---4---5---7---5---7---9---5---
+6 D|5---5---5---7---7---7---9---5---</pre>
+  </div>
+
+  <div class="sub-head"><span class="n">▸</span><h3>Chord voicings</h3></div>
+  <p class="note">The dip lives on the <b style="color:var(--warm)">2nd string (A)</b> for B and C#. D#m and the two landing chords are held.</p>
+
+  <div class="cards">
+    <div class="card"><h4>B <small>with dip</small></h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str move"><span class="name">2 A</span><span class="rail"></span><span class="fr">5 → 4 → 5</span></div>
+      <div class="str open"><span class="name">3 E</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str"><span class="name">4 D</span><span class="rail"></span><span class="fr">5</span></div>
+      <div class="str mute"><span class="name">5 A</span><span class="rail"></span><span class="fr">×</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">5</span></div>
+    </div></div>
+    <div class="card"><h4>C# <small>with dip</small></h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str move"><span class="name">2 A</span><span class="rail"></span><span class="fr">7 → 5 → 7</span></div>
+      <div class="str open"><span class="name">3 E</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str"><span class="name">4 D</span><span class="rail"></span><span class="fr">7</span></div>
+      <div class="str mute"><span class="name">5 A</span><span class="rail"></span><span class="fr">×</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">7</span></div>
+    </div></div>
+    <div class="card"><h4>D#m</h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str"><span class="name">2 A</span><span class="rail"></span><span class="fr">9</span></div>
+      <div class="str"><span class="name">3 E</span><span class="rail"></span><span class="fr">9</span></div>
+      <div class="str open"><span class="name">4 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str mute"><span class="name">5 A</span><span class="rail"></span><span class="fr">×</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">9</span></div>
+    </div></div>
+    <div class="card"><h4>F# <small>1st landing</small></h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">2 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">3 E</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">4 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str move"><span class="name">5 A</span><span class="rail"></span><span class="fr">7</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">0</span></div>
+    </div></div>
+    <div class="card"><h4>B <small>2nd landing</small></h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">2 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str"><span class="name">3 E</span><span class="rail"></span><span class="fr">5</span></div>
+      <div class="str"><span class="name">4 D</span><span class="rail"></span><span class="fr">5</span></div>
+      <div class="str mute"><span class="name">5 A</span><span class="rail"></span><span class="fr">×</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">5</span></div>
+    </div></div>
+  </div>
+
+  <!-- ===================== CHORUS ===================== -->
+  <div class="section-head">
+    <h2>Chorus</h2>
+    <span class="rule"></span>
+  </div>
+
+  <div class="sub-head"><span class="n">▸</span><h3>Progression</h3></div>
+  <p class="note"><b>Twice </b>through. Mostly strumming with two moving moments: on the second D#m the <b>3rd string (E)</b> climbs up to land on the F#, and the closing <b>B</b> keeps a half-step alternation on the <b>2nd string (A)</b> as you strum.</p>
+
+  <div class="prog">
+    <span class="c">F#</span><span class="arr">—</span><span class="c">B</span><span class="arr">—</span><span class="c">D#m</span><span class="arr">—</span><span class="c">B</span><span class="arr">—</span><span class="c">D#m</span><span class="arr">—</span><span class="c">F#</span><span class="arr">—</span><span class="c">B</span>
+    <span class="bars">· ×2</span>
+  </div>
+
+  <p class="syslabel">bars 1–4</p>
+  <div class="tabwrap">
+<pre class="tab"><span class="lbl">     F#         B          D#m        B</span>
+1 D|--0-------|--0-------|--0-------|--0-------|
+2 A|--0-------|--0-------|--0-------|--0-------|
+3 E|--0-------|--5-------|--9-------|--5-------|
+4 D|--0-------|--5-------|--9-------|--5-------|
+5 A|--0-------|--x-------|--x-------|--x-------|
+6 D|--0-------|--5-------|--9-------|--5-------|</pre>
+  </div>
+
+  <p class="syslabel">bars 5–7</p>
+  <div class="tabwrap">
+<pre class="tab"><span class="lbl">     D#m        F#         B</span>
+1 D|--0-------|--0-------|--0-------|
+2 A|--0-------|--0-------|--5---4---|
+3 E|--9--9-10-|-12-------|--5-------|
+4 D|--9-------|--0-------|--0-------|
+5 A|--x-------|--0-------|--x-------|
+6 D|--9-------|--0-------|--5-------|</pre>
+  </div>
+
+  <div class="sub-head"><span class="n">▸</span><h3>Chord voicings</h3></div>
+  <p class="note"><b style="color:var(--accent-deep)">Purple</b> = root, <b style="color:var(--warm)">rose</b> = moving voice. There's two slightly different F# and B shapes.</p>
+
+  <div class="cards">
+    <div class="card"><h4>F# <small>open</small></h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">2 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">3 E</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">4 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">5 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">0</span></div>
+    </div></div>
+    <div class="card"><h4>B</h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">2 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str"><span class="name">3 E</span><span class="rail"></span><span class="fr">5</span></div>
+      <div class="str"><span class="name">4 D</span><span class="rail"></span><span class="fr">5</span></div>
+      <div class="str mute"><span class="name">5 A</span><span class="rail"></span><span class="fr">×</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">5</span></div>
+    </div></div>
+    <div class="card"><h4>D#m <small>+ climb</small></h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">2 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str move"><span class="name">3 E</span><span class="rail"></span><span class="fr">9 → 10 → 12</span></div>
+      <div class="str"><span class="name">4 D</span><span class="rail"></span><span class="fr">9</span></div>
+      <div class="str mute"><span class="name">5 A</span><span class="rail"></span><span class="fr">×</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">9</span></div>
+    </div></div>
+    <div class="card"><h4>F# <small>climbed / high</small></h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">2 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str"><span class="name">3 E</span><span class="rail"></span><span class="fr">12</span></div>
+      <div class="str open"><span class="name">4 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">5 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">0</span></div>
+    </div></div>
+    <div class="card"><h4>B <small>strummed close</small></h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str move"><span class="name">2 A</span><span class="rail"></span><span class="fr">5 ↔ 4</span></div>
+      <div class="str"><span class="name">3 E</span><span class="rail"></span><span class="fr">5</span></div>
+      <div class="str open"><span class="name">4 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str mute"><span class="name">5 A</span><span class="rail"></span><span class="fr">×</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">5</span></div>
+    </div></div>
+  </div>
+
+  <!-- ===================== BRIDGE ===================== -->
+  <div class="section-head">
+    <h2>Bridge</h2>
+    <span class="rule"></span>
+  </div>
+
+  <div class="sub-head"><span class="n">▸</span><h3>Progression</h3></div>
+  <p class="note">Four-bar loop through <b>4 times</b>, then the final <b>B</b> is strummed across <b>two bars</b> as everything falls out. The <b>F#</b> shares the G#m bar, just a quick passing hit on the&nbsp;<b>F#</b> before the B, the same way the <b>3rd string (E)</b>&nbsp;hits 9→10 during the D#m.</p>
+
+  <div class="prog">
+    <span class="c">G#m</span><span class="arr">→</span><span class="c">F#</span><span class="arr">—</span><span class="c">B</span><span class="arr">—</span><span class="c">D#m</span><span class="arr">—</span><span class="c">B</span>
+    <span class="bars">· G#m→F# share a bar · ×4, then hold B (2 bars)</span>
+  </div>
+
+  <div class="tabwrap">
+<pre class="tab"><span class="lbl">     G#m→F#     B          D#m        B</span>
+1 D|--0-------|--0-------|--0-------|--0-------|
+2 A|--0-------|--0-------|--0-------|--0-------|
+3 E|--0-------|--5-------|--9--10---|--5-------|
+4 D|--2---0---|--5-------|--9-------|--5-------|
+5 A|--2---0---|--x-------|--x-------|--x-------|
+6 D|--2---0---|--5-------|--9-------|--5-------|</pre>
+  </div>
+
+  <div class="sub-head"><span class="n">▸</span><h3>Chord voicings</h3></div>
+  <p class="note"><b style="color:var(--accent-deep)">Purple</b> = root, <b style="color:var(--warm)">rose</b> = moving voice. New shape here is the <b>G#m</b>; the rest carry over from the chorus.</p>
+
+  <div class="cards">
+    <div class="card"><h4>G#m</h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">2 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">3 E</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str"><span class="name">4 D</span><span class="rail"></span><span class="fr">2</span></div>
+      <div class="str"><span class="name">5 A</span><span class="rail"></span><span class="fr">2</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">2</span></div>
+    </div></div>
+    <div class="card"><h4>F# <small>passing</small></h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">2 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">3 E</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">4 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">5 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">0</span></div>
+    </div></div>
+    <div class="card"><h4>B</h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">2 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str"><span class="name">3 E</span><span class="rail"></span><span class="fr">5</span></div>
+      <div class="str"><span class="name">4 D</span><span class="rail"></span><span class="fr">5</span></div>
+      <div class="str mute"><span class="name">5 A</span><span class="rail"></span><span class="fr">×</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">5</span></div>
+    </div></div>
+    <div class="card"><h4>D#m <small>with movement</small></h4><div class="strings">
+      <div class="str open"><span class="name">1 D</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str open"><span class="name">2 A</span><span class="rail"></span><span class="fr">open</span></div>
+      <div class="str move"><span class="name">3 E</span><span class="rail"></span><span class="fr">9 → 10</span></div>
+      <div class="str"><span class="name">4 D</span><span class="rail"></span><span class="fr">9</span></div>
+      <div class="str mute"><span class="name">5 A</span><span class="rail"></span><span class="fr">×</span></div>
+      <div class="str root"><span class="name">6 D</span><span class="rail"></span><span class="fr">9</span></div>
+    </div></div>
+  </div>
+
+  <!-- ===================== LEAD LINES ===================== -->
+  <div class="section-head">
+    <h2>Lead Lines</h2>
+    <span class="rule"></span>
+  </div>
+
+  <div class="sub-head"><span class="n">▸ Intro / Interlude</span><h3>Picking pattern</h3></div>
+  <p class="note">Mostly straight <b>8th notes</b>, with the last note held a little longer on each phrase.</p>
+
+  <div class="tabwrap">
+<pre class="tab">1 D|----------------------------------------------------
+2 A|----0-------------0---------------------------------
+3 E|------0-------------0---------3---3-2-----------0---
+4 D|--0-----0-------0-----0-----0---0-----0-------0---0-
+5 A|----------0-0h2---------2-0-------------0---0-------
+6 D|0-----------------------------------------5---------</pre>
+  </div>
+
+  <div class="sub-head"><span class="n">▸ Bridge</span><h3>Strumming</h3></div>
+  <p class="note">Fast down-picked <b>16th-note</b> chords up in the treble. The open <b>4th string</b> drones under a two-note shape on the <b>3rd</b> and <b>2nd</b> strings, all struck together. The lead movement rides the <b>3rd string</b>.</p>
+  <div class="tabwrap">
+<pre class="tab">1 D|-----------------------
+2 A|12-10-9--0-0--0--0--12-
+3 E|12-10-10-9-10-12-14-10-
+4 D|0--0--0--0-0--0--0--0--
+5 A|-----------------------
+6 D|-----------------------</pre>
+  </div>
+
+  <div class="sub-head"><span class="n">▸ Last Chorus</span><h3>Strumming</h3></div>
+  <p class="note">Same treble-chord idea as the bridge. Climbs through three repeated four-chord groups, then the last group resolves once with the <b>2nd string</b> up at 12.</p>
+  <div class="tabwrap">
+<pre class="tab"><span class="lbl">    ×2           ×2           ×2</span>
+1 D|------------|------------|------------|------------|
+2 A|0--0--0--0--|0--0--0--0--|0--0--0--0--|12-12-12-12-|
+3 E|3--2--3--5--|9--7--9--10-|9--10-12-14-|10-9--10-12-|
+4 D|0--0--0--0--|0--0--0--0--|0--0--0--0--|0--0--0--0--|
+5 A|------------|------------|------------|------------|
+6 D|------------|------------|------------|------------|</pre>
+  </div>
+
+  <footer>The Plains</footer>
+
+</div>
+<script id="__editscript">
+(function(){
+  if(location.hash!=='#edit') return;
+  var sel='h1,h2,h3,.note,.v,.k,.scope,.syslabel,.step,.chip,footer';
+  document.querySelectorAll(sel).forEach(function(el){
+    el.setAttribute('contenteditable','true');
+    el.setAttribute('spellcheck','false');
+  });
+  var bar=document.createElement('div');
+  bar.id='__editbar';
+  bar.style.cssText='position:fixed;top:12px;right:12px;z-index:9999;background:#20232e;color:#fff;font:500 13px/1.3 -apple-system,system-ui,sans-serif;padding:10px 12px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.25);display:flex;gap:12px;align-items:center';
+  var lab=document.createElement('span');
+  lab.textContent='Edit mode · click any text to change it';
+  lab.style.opacity='.85';
+  var btn=document.createElement('button');
+  btn.textContent='Download clean copy';
+  btn.style.cssText='background:#6f6fb3;color:#fff;border:0;border-radius:7px;padding:7px 11px;font:600 12px -apple-system,system-ui,sans-serif;cursor:pointer';
+  btn.onclick=function(){
+    var clone=document.documentElement.cloneNode(true);
+    clone.querySelectorAll('[contenteditable]').forEach(function(e){e.removeAttribute('contenteditable');e.removeAttribute('spellcheck');});
+    var eb=clone.querySelector('#__editbar');if(eb)eb.remove();
+    var html='<!DOCTYPE html>\n'+clone.outerHTML;
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));
+    a.download=(location.pathname.split('/').pop()||'guitar-reference.html');
+    a.click();
+  };
+  bar.appendChild(lab);bar.appendChild(btn);
+  document.body.appendChild(bar);
+})();
+</script>
+
+
+</body></html>
